@@ -1,0 +1,25 @@
+* {
+  font-family: "Quicksand", sans-serif;
+}
+
+:root {
+  /*Colors*/
+
+  --gray-very-dark: #3b4439;
+  --gray-dark: #99a897;
+  --gray: #dfdcf5;
+  --gray-ligth: #f5f5f5;
+  --gray-very-ligth: #f8f8f8;
+  --white: #ffffff;
+
+  --main: #f0a500;
+  --main-dark: #cf7500;
+
+  --back: #000000;
+
+  /*sizes*/
+  --font: 14px;
+  --nav-height-logo: 2em;
+  --nav-height-menu: 3.5em;
+  --wrapper-padding: 1.5em;
+}

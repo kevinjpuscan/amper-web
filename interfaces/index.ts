@@ -4,7 +4,18 @@
 //
 // import User from 'path/to/interfaces';
 
+import { ReactNode } from "react";
+
 export type User = {
-  id: number
-  name: string
-}
+  id: number;
+  name: string;
+};
+
+export type propsContainer = {
+  children: ReactNode;
+};
+
+export type indicatorWithIcon = {
+  icon: string;
+  value: number;
+};
