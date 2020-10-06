@@ -14,6 +14,7 @@ function Nav() {
         .nav-section {
           width: 100%;
           background: var(--gray-very-ligth);
+          z-index: 1;
         }
 
         .nav-logo {
@@ -32,7 +33,7 @@ function Nav() {
           position: -webkit-sticky;
           position: sticky;
           top: 0px;
-          box-shadow: 0px 2px 10px var(--gray-ligth);
+          box-shadow: 0px 2px 25px var(--gray);
         }
       `}</style>
     </Fragment>

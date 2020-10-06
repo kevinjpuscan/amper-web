@@ -7,7 +7,7 @@ function NavList() {
       <Link href="/">
         <a className="menu-icon-container">
           <div className="menu-icon">
-            <i className="fas fa-chart-line"></i>
+            <i className="fas fa-chart-line" />
           </div>
           <div className="menu-text">Dashboard</div>
         </a>
@@ -15,7 +15,7 @@ function NavList() {
       <Link href="/historic">
         <a className="menu-icon-container">
           <div className="menu-icon">
-            <i className="far fa-calendar-alt"></i>
+            <i className="far fa-calendar-alt" />
           </div>
           <div className="menu-text">Histórico</div>
         </a>
@@ -24,7 +24,7 @@ function NavList() {
       <Link href="/alert">
         <a className="menu-icon-container">
           <div className="menu-icon">
-            <i className="far fa-bell"></i>
+            <i className="far fa-bell" />
           </div>
           <div className="menu-text">Alertas</div>
         </a>
@@ -32,7 +32,7 @@ function NavList() {
       <Link href="/settings">
         <a className="menu-icon-container">
           <div className="menu-icon">
-            <i className="fas fa-cog"></i>
+            <i className="fas fa-cog" />
           </div>
           <div className="menu-text">Ajustes</div>
         </a>
