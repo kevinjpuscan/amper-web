@@ -69,7 +69,7 @@ export class OptionFactory {
     newElement: infoAPI
   ): echarts.EChartOption<echarts.EChartOption.Series> {
     let newOption = cloneDeep(option);
-    newOption.series[0].data.push(newElement.value);
+    newOption!.series![0].data!.push(newElement.value);
     newOption.xAxis.data.push(newElement.label);
     return newOption;
   }
@@ -96,8 +96,8 @@ export class OptionFactory {
       },
       dataZoom: [
         {
-          start: this.startZoom,
-          end: this.endZoom,
+          start: 60,
+          end: 100,
           handleIcon:
             "M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z",
           handleSize: "80%",
