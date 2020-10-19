@@ -8,8 +8,9 @@ import { indicatorWithIcon } from "../interfaces";
 import cloneDeep from "clone-deep";
 import ChartLine from '../components/items/ChartLine';
 import {baseOption} from '../utils/ChartOption';
-import {FormaterDataChartBar} from '../utils/Formater';
-import { infoAPI } from "../utils/OptionChart";
+import {FormaterDataChartStandart,DataFormatedCategories} from '../utils/Formater';
+import api from '../utils/api';
+/* import { infoAPI } from "../utils/OptionChart";
 const data: infoAPI[] = [
   {
     label: "7:00",
@@ -35,30 +36,36 @@ const data: infoAPI[] = [
     label: "12:00",
     value: 15,
   },
-];
-let formaterDataChart=new FormaterDataChartBar();
+]; */
+let formaterDataChart=new FormaterDataChartStandart();
+/* formaterDataChart._data=data; */
+
 
 
 function HistoricPage() {
   let[option,setOptions]=useState(baseOption)
   
-  useEffect(()=>{
-    let dataFormated:{
-      labels:string[],
-      values:number[]
-    }=formaterDataChart.formating(data,'label','value');
+  useEffect(() => {
+    (async function initial() {
+      
+      let {data} = await api.get('energy/bymonths/2020');
+      formaterDataChart._data = data.body;
+      formaterDataChart._keyLabel='timeRegister';
+      formaterDataChart._keyValue='kwHour';
+      let dataFormated: DataFormatedCategories = formaterDataChart.formating();
 
-    let newOption=cloneDeep(option);
+      let newOption = cloneDeep(option);
 
-    newOption!.title!.text="Consumo";
-    newOption!.xAxis!.data=dataFormated.labels;
-    newOption!.xAxis!.boundaryGap=true;
-    newOption!.series![0].name='Kwh';
-    newOption!.series![0].data=dataFormated.values;
-    
-    setOptions(cloneDeep(newOption));
+      newOption!.title!.text = "Consumo";
+      newOption!.xAxis!.data = dataFormated.labels;
+      newOption!.xAxis!.boundaryGap = true;
+      newOption!.series![0].name = 'Kwh';
+      newOption!.series![0].data = dataFormated.series[0];
 
-  },[])
+      setOptions(cloneDeep(newOption));
+    })()
+
+    },[])
   const indicators: Array<indicatorWithIcon> = [
     {
       icon: "fas fa-bolt",

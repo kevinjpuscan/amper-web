@@ -1,47 +1,79 @@
-abstract class FormaterDataChart{
-    abstract formating<type>(data:type[],keyLabel:string,keyValue:string,formaterValue?:FormaterValue):any;
-    abstract formatingOnlyValue<type>(data:type[],key:string,formaterValue?:FormaterValue):any;
+import { EChartOption, EChartsOptionConfig } from "echarts";
+
+export interface DataFormated{
 }
 
-class FormaterDataChartBar extends FormaterDataChart{
-    formatingOnlyValue<type>(data: type[], key: string,formaterValue?:FormaterValue) {
-        return data.map((element: any) => {
-            return formaterValue?formaterValue.formating(element[key]):element[key];
+export interface DataFormatedCategories extends DataFormated{
+    labels:string[];
+    series:number[][];
+}
+
+
+export interface FormaterDataChart{
+    _data:Object[];
+    formating():DataFormated;
+}
+
+
+class FormaterDataChartStandart implements FormaterDataChart{
+    _data: Object[]=[];
+    _keyLabel:string='';
+    _keyValue:string='';
+    _formaterValue?:FormaterValue;
+
+    data(value:Object[]){
+        this._data=value; 
+    }
+
+    keyLabel(value:string){
+        this._keyLabel=value; 
+    }
+
+    keyValue(value:string){
+        this._keyValue=value; 
+    }
+
+    formating(): DataFormatedCategories {
+        let labels= this.formatingOnlyValue(this._keyLabel);
+        let values= this.formatingOnlyValue(this._keyValue);
+        return {labels,series:[[...values]]};
+    }
+
+    formatingOnlyValue(key:string):any[]{
+        return this._data.map((element: any) => {
+            return this._formaterValue?this._formaterValue.formating(element[key]):element[key];
           });
     }
-    formating<type>(data: type[],keyLabel:string,keyValue:string,formaterValue?:FormaterValue) {
-        let labels= this.formatingOnlyValue(data,keyLabel,formaterValue);
-        let values= this.formatingOnlyValue(data,keyValue,formaterValue);
-        return {labels,values};
-    }
+
 }
 
 
-abstract class FormaterValue{
-    abstract formating(input:string|number):string|number;
+
+
+export interface FormaterValue{
+    formating(input:string|number):string|number;
 }
 
-class FormaterValueDate extends FormaterValue{
+class FormaterValueDate implements FormaterValue{
     formating(input: string): string {
         return input+'';
     }
 }
 
-class FormaterValueNumber extends FormaterValue{
-    transform:(input:number)=>number
+class FormaterValueNumber implements FormaterValue{
+    _transform:(input:number)=>number;
+    
     constructor(transform:(input:number)=>number){
-        super();
-        this.transform=transform;
-    };
+        this._transform=transform;
+    }
     formating(input: number): number {
-        return this.transform(input);
+        return this._transform(input);
     }
 }
 
+
 export {
-    FormaterDataChart,
-    FormaterDataChartBar,
-    FormaterValue,
+    FormaterDataChartStandart,
     FormaterValueDate,
     FormaterValueNumber
 }

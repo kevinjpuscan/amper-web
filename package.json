@@ -8,6 +8,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "axios": "0.20.0",
     "clone-deep": "4.0.1",
     "echarts": "4.9.0",
     "echarts-for-react": "2.0.16",
