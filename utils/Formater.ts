@@ -1,79 +1,71 @@
-import { EChartOption, EChartsOptionConfig } from "echarts";
-
-export interface DataFormated{
+class FormaterCategory {
+  _data: Object[] = [];
+  data(value: Object[]) {
+    this._data = value;
+  }
+  formating(key: string = "", transform?: (input: any) => string | number) {
+    return this._data.map((element: any) => {
+      return transform ? transform(element[key]) : element[key];
+    });
+  }
 }
 
-export interface DataFormatedCategories extends DataFormated{
-    labels:string[];
-    series:number[][];
-}
+const whToKwh = (input: number) => {
+  return Number((input / 1000).toFixed(2));
+};
+const kwh = (input: number) => {
+  return Number(input.toFixed(2));
+};
 
+const watts = (input: number) => {
+  return Number((input * 360).toFixed(2));
+};
 
-export interface FormaterDataChart{
-    _data:Object[];
-    formating():DataFormated;
-}
+const month = (input: string) => {
+  let date = new Date(input);
+  switch (date.getMonth() + 1) {
+    case 1:
+      return "Ene";
+    case 2:
+      return "Feb";
+    case 3:
+      return "Mar";
+    case 4:
+      return "Abr";
+    case 5:
+      return "May";
+    case 6:
+      return "Jun";
+    case 7:
+      return "Jul";
+    case 8:
+      return "Ago";
+    case 9:
+      return "Set";
+    case 10:
+      return "Oct";
+    case 11:
+      return "Nov";
+    case 12:
+      return "Dec";
 
+    default:
+      return "NA";
+  }
+};
 
-class FormaterDataChartStandart implements FormaterDataChart{
-    _data: Object[]=[];
-    _keyLabel:string='';
-    _keyValue:string='';
-    _formaterValue?:FormaterValue;
+const day = (input: string) => {
+  let date = new Date(input);
+  return date.getDate();
+};
+const hour = (input: string) => {
+  let date = new Date(input);
+  return `${date.getHours()}:00`;
+};
 
-    data(value:Object[]){
-        this._data=value; 
-    }
+const time = (input: string) => {
+  let date = new Date(input);
+  return date.toLocaleTimeString();
+};
 
-    keyLabel(value:string){
-        this._keyLabel=value; 
-    }
-
-    keyValue(value:string){
-        this._keyValue=value; 
-    }
-
-    formating(): DataFormatedCategories {
-        let labels= this.formatingOnlyValue(this._keyLabel);
-        let values= this.formatingOnlyValue(this._keyValue);
-        return {labels,series:[[...values]]};
-    }
-
-    formatingOnlyValue(key:string):any[]{
-        return this._data.map((element: any) => {
-            return this._formaterValue?this._formaterValue.formating(element[key]):element[key];
-          });
-    }
-
-}
-
-
-
-
-export interface FormaterValue{
-    formating(input:string|number):string|number;
-}
-
-class FormaterValueDate implements FormaterValue{
-    formating(input: string): string {
-        return input+'';
-    }
-}
-
-class FormaterValueNumber implements FormaterValue{
-    _transform:(input:number)=>number;
-    
-    constructor(transform:(input:number)=>number){
-        this._transform=transform;
-    }
-    formating(input: number): number {
-        return this._transform(input);
-    }
-}
-
-
-export {
-    FormaterDataChartStandart,
-    FormaterValueDate,
-    FormaterValueNumber
-}
+export { FormaterCategory, whToKwh, kwh, month, day, hour, watts, time };

@@ -3,11 +3,11 @@ import { EChartOption } from "echarts";
 
 let baseOption:EChartOption={
   tooltip: {
-    trigger: "axis",
-    position: function (positions) {
-      return [positions[0], "10%"];
-    },
-  },
+    trigger: 'axis',
+    axisPointer: {            // 
+        type: 'shadow'        //'line' | 'shadow'
+    }
+},
   title: {
     text: "",
   },
@@ -19,7 +19,7 @@ let baseOption:EChartOption={
   yAxis: {
     type: "value",
   },
-  dataZoom: [
+  /* dataZoom: [
     {
       start: 60,
       end: 100,
@@ -34,7 +34,7 @@ let baseOption:EChartOption={
         shadowOffsetY: 2,
       },
     },
-  ],
+  ], */
   series: [
     { 
       name:'',
