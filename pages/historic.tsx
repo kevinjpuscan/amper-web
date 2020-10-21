@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React from "react";
 import ChartByMonth from "../components/charts/ChartByMonth";
 import Card from "../components/containers/Card";
 import ResumeData from "../components/items/ResumeData";

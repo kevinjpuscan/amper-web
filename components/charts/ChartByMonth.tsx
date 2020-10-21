@@ -5,10 +5,12 @@ import {FormaterCategory,kwh,month} from '../../utils/Formater';
 import api from '../../utils/api';
 import { OptionManager } from "../../utils/ChartOption";
 
-let formater=new FormaterCategory();
-let optionManager=new OptionManager();
+
 
 function ChartByMonth() {
+  let formater=new FormaterCategory();
+  let optionManager=new OptionManager();
+
   let[option,setOptions]=useState({})
   let [labels,setLabels]=useState(['']);
   let [values,setValues]=useState([0]);
@@ -19,7 +21,7 @@ function ChartByMonth() {
       let {data} = await api.get('energy/bymonths/2020');
       formater._data = data.body;
       let newLabels=formater.formating('timeRegister',month);
-      let newValues=formater.formating('wattsHour',kwh);
+      let newValues=formater.formating('kwHour',kwh);
 
       optionManager.addTitle('Consumo por Mes');
       optionManager.addXAxis(newLabels);
@@ -30,6 +32,10 @@ function ChartByMonth() {
       setLabels(newLabels);
       setValues(newValues);
       setOptions(newOption);
+
+      if(labels && values){
+        console.log('test')
+      }
     })()
 
     },[])

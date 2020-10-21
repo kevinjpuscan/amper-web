@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Card from "../components/containers/Card";
 import ResumeData from "../components/items/ResumeData";
 import MainLayout from "../components/layouts/MainLayout";

@@ -1,15 +1,15 @@
 import React,{useEffect,useState} from "react";
 import cloneDeep from "clone-deep";
 import Chart from '../ui/Chart';
-import {baseOption, OptionManager} from '../../utils/ChartOption';
+import {OptionManager} from '../../utils/ChartOption';
 import {day, FormaterCategory,kwh} from '../../utils/Formater';
 import api from '../../utils/api';
 
-let formater=new FormaterCategory();
-let optionManager = new OptionManager();
 
 function ChartByDay() {
-  let[option,setOptions]=useState({})
+  let formater=new FormaterCategory();
+  let optionManager = new OptionManager();
+  let [option,setOptions]=useState({});
   let [labels,setLabels]=useState(['']);
   let [values,setValues]=useState([0]);
   
@@ -19,7 +19,7 @@ function ChartByDay() {
       let {data} = await api.get('energy/bydays/2020/10');
       formater._data = data.body;
       let newLabels=formater.formating('timeRegister',day);
-      let newValues=formater.formating('wattsHour',kwh);
+      let newValues=formater.formating('kwHour',kwh);
 
       optionManager.addTitle('Consumo por Día');
       optionManager.addXAxis(newLabels);
@@ -30,6 +30,10 @@ function ChartByDay() {
       setLabels(newLabels);
       setValues(newValues);
       setOptions(newOption);
+
+      if(labels && values){
+        console.log('test')
+      }
     })()
 
     },[])

@@ -5,11 +5,11 @@ import {OptionManager} from '../../utils/ChartOption';
 import {FormaterCategory,time, watts} from '../../utils/Formater';
 import api from '../../utils/api';
 
-let formater=new FormaterCategory();
-let optionManager=new OptionManager();
 
 function ChartByLastDay() {
-
+  let formater=new FormaterCategory();
+  let optionManager=new OptionManager();
+  
   let[option,setOptions]=useState({})
   let [labels,setLabels]=useState(['']);
   let [values,setValues]=useState([0]);

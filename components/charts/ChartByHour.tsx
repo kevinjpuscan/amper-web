@@ -1,26 +1,25 @@
 import React,{useEffect,useState} from "react";
 import cloneDeep from "clone-deep";
 import Chart from '../ui/Chart';
-import {baseOption, OptionManager} from '../../utils/ChartOption';
+import { OptionManager} from '../../utils/ChartOption';
 import {FormaterCategory,kwh,hour} from '../../utils/Formater';
 import api from '../../utils/api';
 
-let formater=new FormaterCategory();
-let optionManager = new OptionManager();
 
 function ChartByHour() {
+  let formater=new FormaterCategory();
+  let optionManager = new OptionManager();
   let[option,setOptions]=useState({})
   let [labels,setLabels]=useState(['']);
   let [values,setValues]=useState([0]);
   
   useEffect(() => {
-    console.log('entro');
     (async function initial() {
 
       let {data} = await api.get('energy/byhours/2020/10/21');
       formater._data = data.body;
       let newLabels=formater.formating('timeRegister',hour);
-      let newValues=formater.formating('wattsHour',kwh);
+      let newValues=formater.formating('kwHour',kwh);
 
       optionManager.addTitle('Consumo por Hora');
       optionManager.addXAxis(newLabels);
@@ -31,6 +30,10 @@ function ChartByHour() {
       setLabels(newLabels);
       setValues(newValues);
       setOptions(newOption);
+
+      if(labels && values){
+        console.log('test')
+      }
     })()
 
     },[])
