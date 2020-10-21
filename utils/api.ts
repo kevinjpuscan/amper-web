@@ -1,15 +1,15 @@
 import axios from "axios";
-const baseURL='http://localhost:3001/api/';
+const baseURL = "http://192.168.100.15:3001/api/";
 
-const getToken=()=>{
-    return null;
-}
+const getToken = () => {
+  return null;
+};
 
 const api = axios.create({
-  baseURL
+  baseURL,
 });
 
-api.interceptors.request.use(async config => {
+api.interceptors.request.use(async (config) => {
   const token = getToken();
 
   if (token) {

@@ -1,36 +1,39 @@
 import React,{useEffect,useState} from "react";
 import cloneDeep from "clone-deep";
 import Chart from '../ui/Chart';
-import {baseOption} from '../../utils/ChartOption';
+import {baseOption, OptionManager} from '../../utils/ChartOption';
 import {FormaterCategory,kwh,hour} from '../../utils/Formater';
 import api from '../../utils/api';
 
 let formater=new FormaterCategory();
+let optionManager = new OptionManager();
 
 function ChartByHour() {
-  let[option,setOptions]=useState(baseOption)
+  let[option,setOptions]=useState({})
+  let [labels,setLabels]=useState(['']);
+  let [values,setValues]=useState([0]);
   
   useEffect(() => {
+    console.log('entro');
     (async function initial() {
-      
-      let {data} = await api.get('energy/byhours/2020/10/20');
+
+      let {data} = await api.get('energy/byhours/2020/10/21');
       formater._data = data.body;
-      let labels=formater.formating('timeRegister',hour)
-      let values=formater.formating('kwHour',kwh)
+      let newLabels=formater.formating('timeRegister',hour);
+      let newValues=formater.formating('wattsHour',kwh);
 
-      let newOption = cloneDeep(option);
+      optionManager.addTitle('Consumo por Hora');
+      optionManager.addXAxis(newLabels);
+      optionManager.addSerie('kWh',newValues);
 
-      newOption!.title!.text = "Consumo por hora";
-      newOption!.xAxis!.data = [...labels];
-      newOption!.xAxis!.boundaryGap = true;
-      newOption!.series![0].name = 'Kwh';
-      newOption!.series![0].data = [...values];
+      let newOption=cloneDeep(optionManager.option())
 
-      setOptions(cloneDeep(newOption));
+      setLabels(newLabels);
+      setValues(newValues);
+      setOptions(newOption);
     })()
 
     },[])
-
   return (
         <Chart options={option}/>
   );
